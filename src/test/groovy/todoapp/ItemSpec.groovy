@@ -12,7 +12,7 @@ class ItemSpec extends Specification implements DomainUnitTest<Item> {
     def cleanup() {
     }
 
-    void initalisation() {
+    void "initalisation"() {
         expect:"Creating Item object"
         def item = new Item(title: "Item")
         item.title == "Item"

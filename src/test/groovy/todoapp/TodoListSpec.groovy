@@ -3,18 +3,18 @@ package todoapp
 import grails.testing.gorm.DomainUnitTest
 import spock.lang.Specification
 
-class ListSpec extends Specification implements DomainUnitTest<List> {
+class TodoListSpec extends Specification implements DomainUnitTest<TodoList> {
 
     def setup() {
-        mockDomain List
+        mockDomain TodoList
     }
 
     def cleanup() {
     }
 
-    void initalisation() {
+    void "initalisation"() {
         expect:"Creating List object"
-        def list = new List(name: "Items")
+        def list = new TodoList(name: "Items")
         list.name == "Items"
     }
 }

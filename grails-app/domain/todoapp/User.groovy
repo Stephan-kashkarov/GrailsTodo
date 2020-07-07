@@ -1,16 +1,37 @@
 package todoapp
 
-class User {
-    
-    String username
-    String passwordHash
-    String email
+import groovy.transform.EqualsAndHashCode
+import groovy.transform.ToString
+import grails.compiler.GrailsCompileStatic
 
-    static constraints = {
-        username size: 5..15, blank: false, unique: true, nullable: false
-        passwordHash blank: false, nullable: false
-        email email: true, blank: true, nullable: true
+@GrailsCompileStatic
+@EqualsAndHashCode(includes='username')
+@ToString(includes='username', includeNames=true, includePackage=false)
+class User implements Serializable {
+
+    private static final long serialVersionUID = 1
+
+    String username
+    String password
+    String email
+    boolean enabled = true
+    boolean accountExpired
+    boolean accountLocked
+    boolean passwordExpired
+
+    Set<Role> getAuthorities() {
+        (UserRole.findAllByUser(this) as List<UserRole>)*.role as Set<Role>
     }
 
-    static hasOne = [listUser: ListUser]
+    static hasMany = TodoListUser
+
+    static constraints = {
+        password nullable: false, blank: false, password: true
+        username nullable: false, blank: false, unique: true
+        email nullable: false, blank: true, email: true
+    }
+
+    static mapping = {
+	    password column: '`password`'
+    }
 }
