@@ -8,6 +8,7 @@ import groovy.transform.CompileStatic
 @CompileStatic
 class Application extends GrailsAutoConfiguration {
     static void main(String[] args) {
+        grails.plugin.springsecurity.logout.postOnly = false
         GrailsApp.run(Application, args)
     }
 }
